@@ -12,6 +12,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     Button btnLogin, btnRegister;
     LoginFragment loginFragment=new LoginFragment();
+    RegisterFragment registerFragment = new RegisterFragment();
     Context context;
 
     @Override
@@ -32,7 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                registerFragment.show(getSupportFragmentManager(),"Register Dialog");
             }
         });
     }

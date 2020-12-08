@@ -8,12 +8,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,8 +17,12 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -39,13 +37,7 @@ import java.util.Map;
 import eightbitlab.com.blurview.BlurView;
 import eightbitlab.com.blurview.RenderScriptBlur;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link LoginFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class LoginFragment extends DialogFragment {
-
+public class RegisterFragment extends DialogFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -55,7 +47,7 @@ public class LoginFragment extends DialogFragment {
     private String mParam1;
     private String mParam2;
 
-    public LoginFragment() {
+    public RegisterFragment() {
         // Required empty public constructor
     }
 
@@ -88,8 +80,9 @@ public class LoginFragment extends DialogFragment {
 
     ImageView btnClose;
     BlurView blurView;
-    Button btn;
-    EditText email,password;
+    Button btn_confirm,btn_next,btn_farmer,btn_buyer;
+    LinearLayout layout1, layout2;
+    EditText email, password,location,contact;
     AlertDialog.Builder builder;
 
     @Nullable
@@ -99,15 +92,13 @@ public class LoginFragment extends DialogFragment {
             getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         }
-
-
         return super.onCreateView(inflater, container, savedInstanceState);
 
     }
 
-    @Override public void onStart() {
+    @Override
+    public void onStart() {
         super.onStart();
-
 
         Window window = getDialog().getWindow();
         WindowManager.LayoutParams windowParams = window.getAttributes();
@@ -122,9 +113,8 @@ public class LoginFragment extends DialogFragment {
 
         builder = new AlertDialog.Builder(getActivity());
 
-        View view=requireActivity().getLayoutInflater().inflate(R.layout.fragment_login,null);
-        blurView=view.findViewById(R.id.blurView);
-
+        View view = requireActivity().getLayoutInflater().inflate(R.layout.fragment_register, null);
+        blurView =view.findViewById(R.id.blurView);
         float radius = 4f;
 
         View decorView = getActivity().getWindow().getDecorView();
@@ -142,27 +132,40 @@ public class LoginFragment extends DialogFragment {
                 .setBlurAutoUpdate(true)
                 .setHasFixedTransformationMatrix(true);
 
-
-        btnClose=view.findViewById(R.id.btnFragmentClose);
-        btn=view.findViewById(R.id.btn);
-        email=view.findViewById(R.id.email);
-        password=view.findViewById(R.id.password);
+        btnClose = view.findViewById(R.id.btnFragmentClose);
+        btn_next = view.findViewById(R.id.btn_next);
+        btn_buyer=view.findViewById(R.id.buyer);
+        btn_farmer=view.findViewById(R.id.farmer);
+        btn_confirm=view.findViewById(R.id.btn_confirm);
+        contact=view.findViewById(R.id.contact);
+        location=view.findViewById(R.id.address);
+        layout1=view.findViewById(R.id.first);
+        layout2=view.findViewById(R.id.second);
+        email = view.findViewById(R.id.email);
+        password = view.findViewById(R.id.password);
 
 
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LoginFragment.this.getDialog().dismiss();
+                RegisterFragment.this.getDialog().dismiss();
             }
         });
 
-        btn.setOnClickListener(new View.OnClickListener() {
+        btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(),MainActivity.class));
+                layout1.setVisibility(View.GONE);
+                layout2.setVisibility(View.VISIBLE);
             }
         });
 
+        btn_confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), MainActivity.class));
+            }
+        });
 
 
         builder.setView(view);
@@ -174,11 +177,11 @@ public class LoginFragment extends DialogFragment {
     public void sendLoginRequest(){
 
         final ProgressDialog pDialog = new ProgressDialog(getContext());
-        pDialog.setMessage("Logging ...");
+        pDialog.setMessage("Registration ...");
         pDialog.show();
 
         RequestQueue queue = Volley.newRequestQueue(getContext());
-        StringRequest request = new StringRequest(Request.Method.POST, "https://farmerbuyer.herokuapp.com/login", new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.POST, "https://farmerbuyer.herokuapp.com/register", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
@@ -207,6 +210,7 @@ public class LoginFragment extends DialogFragment {
 
                 final HashMap<String, String> postParams = new HashMap<String, String>();
                 postParams.put("email", email.getText().toString());
+                postParams.put("contact",contact.getText().toString());
                 postParams.put("password", password.getText().toString());
                 return postParams;
             }
