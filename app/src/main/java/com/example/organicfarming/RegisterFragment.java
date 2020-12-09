@@ -60,8 +60,8 @@ public class RegisterFragment extends DialogFragment {
      * @return A new instance of fragment LoginFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static LoginFragment newInstance(String param1, String param2) {
-        LoginFragment fragment = new LoginFragment();
+    public static RegisterFragment newInstance(String param1, String param2) {
+        RegisterFragment fragment = new RegisterFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -80,10 +80,11 @@ public class RegisterFragment extends DialogFragment {
 
     ImageView btnClose;
     BlurView blurView;
-    Button btn_confirm,btn_next,btn_farmer,btn_buyer;
+    Button btn_confirm,btn_farmer,btn_buyer;
     LinearLayout layout1, layout2;
     EditText email, password,location,contact;
     AlertDialog.Builder builder;
+    int UserType;
 
     @Nullable
     @Override
@@ -133,7 +134,6 @@ public class RegisterFragment extends DialogFragment {
                 .setHasFixedTransformationMatrix(true);
 
         btnClose = view.findViewById(R.id.btnFragmentClose);
-        btn_next = view.findViewById(R.id.btn_next);
         btn_buyer=view.findViewById(R.id.buyer);
         btn_farmer=view.findViewById(R.id.farmer);
         btn_confirm=view.findViewById(R.id.btn_confirm);
@@ -152,9 +152,19 @@ public class RegisterFragment extends DialogFragment {
             }
         });
 
-        btn_next.setOnClickListener(new View.OnClickListener() {
+        btn_farmer.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+                UserType=0;
+                layout1.setVisibility(View.GONE);
+                layout2.setVisibility(View.VISIBLE);
+            }
+        });
+
+        btn_buyer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserType=1;
                 layout1.setVisibility(View.GONE);
                 layout2.setVisibility(View.VISIBLE);
             }
@@ -163,7 +173,11 @@ public class RegisterFragment extends DialogFragment {
         btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), MainActivity.class));
+                if(UserType==1)
+                    startActivity(new Intent(getActivity(),BuyerActivity.class));
+                else
+                    startActivity(new Intent(getActivity(),FarmerActivity.class));
+                getActivity().finish();
             }
         });
 

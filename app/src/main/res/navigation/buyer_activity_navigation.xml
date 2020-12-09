@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/buyer_nav_home"
+    android:id="@+id/buyer_activity_navigation">
+
+    <fragment
+        android:id="@+id/buyer_nav_home"
+        android:name="com.example.organicfarming.BuyerHomeFragment"
+        android:label="Home Fragment"
+        tools:layout="@layout/fragment_buyer_home" />
+
+    <fragment
+        android:id="@+id/buyer_nav_profile"
+        android:name="com.example.organicfarming.BuyerProfileFragment"
+        android:label="Profile Fragment"
+        tools:layout="@layout/fragment_buyer_profile" />
+
+    <fragment
+        android:id="@+id/buyer_nav_orders"
+        android:name="com.example.organicfarming.BuyerOrderFragment"
+        android:label="Order Fragment"
+        tools:layout="@layout/fragment_buyer_order" />
+
+    <fragment
+        android:id="@+id/buyer_nav_favorites"
+        android:name="com.example.organicfarming.BuyerFavoritesFragment"
+        android:label="Favorites Fragment"
+        tools:layout="@layout/fragment_buyer_favorites" />
+
+</navigation>

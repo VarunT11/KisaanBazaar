@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.OrganicFarming" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimary">#F5F3F3</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
@@ -12,5 +12,12 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">#FFC1C7</item>
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="navigation_bar_text_appearance" parent="Theme.AppCompat.Light">
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:padding">5dp</item>
     </style>
 </resources>

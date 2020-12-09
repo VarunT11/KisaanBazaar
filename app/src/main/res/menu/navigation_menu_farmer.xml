@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_farmer">
+
+    <group android:id="@+id/menu_top">
+        <item
+            android:id="@+id/nav_buyer_home"
+            android:icon="@drawable/ic_home"
+            android:title="Home"/>
+        <item
+            android:id="@+id/nav_buyer_profile"
+            android:icon="@drawable/ic_profile"
+            android:title="Profile"/>
+        <item
+            android:id="@+id/nav_buyer_my_orders"
+            android:icon="@drawable/ic_my_orders"
+            android:title="Order History"/>
+        <item
+            android:id="@+id/nav_buyer_about_us"
+            android:icon="@drawable/ic_about_us"
+            android:title="About Us" />
+        <item
+            android:id="@+id/nav_buyer_log_out"
+            android:icon="@drawable/ic_logout"
+            android:title="Logout" />
+    </group>
+
+</menu>

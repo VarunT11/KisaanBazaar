@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    android:id="@+id/farmer_drawer"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FarmerActivity">
+
+    <include layout="@layout/farmer_activity_app_bar_main"/>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation_farmer"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="#404A62"
+        android:fitsSystemWindows="true"
+        app:menu="@menu/navigation_menu_farmer"
+        app:headerLayout="@layout/nav_header"
+        app:itemHorizontalPadding="32dp"
+        app:itemIconPadding="16dp"
+        app:itemTextColor="@color/white"
+        app:itemTextAppearance="@style/navigation_bar_text_appearance"
+        app:itemIconTint="#7186B7"
+        app:itemIconSize="22dp"
+        app:elevation="0dp"/>
+
+</androidx.drawerlayout.widget.DrawerLayout>

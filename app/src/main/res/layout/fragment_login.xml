@@ -38,9 +38,10 @@
             android:layout_height="40dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/edit_text_round"
+            android:fontFamily="@font/roboto_medium"
             android:hint="Email address"
-            android:paddingLeft="20dp"
             android:inputType="textEmailAddress"
+            android:paddingLeft="20dp"
             android:textColorHint="#99000000" />
 
         <EditText
@@ -48,9 +49,10 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@drawable/edit_text_round"
+            android:fontFamily="@font/roboto_medium"
             android:hint="Password"
-            android:paddingLeft="20dp"
             android:inputType="textPassword"
+            android:paddingLeft="20dp"
             android:textColorHint="#99000000" />
 
         <Button
@@ -60,6 +62,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="38dp"
             android:background="@drawable/alert_round_transparent"
+            android:fontFamily="@font/roboto_medium"
             android:text="Confirm"
             android:textColor="#FFFFFF" />
     </LinearLayout>
