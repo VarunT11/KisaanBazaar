@@ -3,7 +3,9 @@ package com.example.organicfarming;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -32,6 +34,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -159,7 +164,11 @@ public class LoginFragment extends DialogFragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendLoginRequest();
+                if(email.getText().toString().isEmpty() || password.getText().toString().isEmpty())
+                    Toast.makeText(getActivity(),"Please Enter the Required Credentials",Toast.LENGTH_SHORT).show();
+                else {
+                    sendLoginRequest();
+                }
             }
         });
 
@@ -184,11 +193,29 @@ public class LoginFragment extends DialogFragment {
 
                 Log.i("My success",""+response);
                 pDialog.dismiss();
-                if(response.equalsIgnoreCase("true")) {
+                String type="", uid="";
 
-                    Toast.makeText(getContext(), "Login Successful", Toast.LENGTH_SHORT).show();
-                }else
-                {
+                try {
+                    JSONObject jsonObject=new JSONObject(response);
+                    type=jsonObject.getString("type");
+                    uid=jsonObject.getString("uid");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                if(type.equalsIgnoreCase("0")) {
+                    Toast.makeText(getContext(), "Buyer Login Successful", Toast.LENGTH_SHORT).show();
+                    updateCurrentUser(uid);
+                    startActivity(new Intent(getActivity(),BuyerActivity.class));
+                    getActivity().finish();
+                }
+                else if (type.equalsIgnoreCase("1")){
+                    Toast.makeText(getContext(),"Farmer Login Successful",Toast.LENGTH_SHORT).show();
+                    updateCurrentUser(uid);
+                    startActivity(new Intent(getActivity(),FarmerActivity.class));
+                    getActivity().finish();
+                }
+                else{
                     //credential not match
                     Toast.makeText(getContext(),"Login Failed",Toast.LENGTH_LONG).show();
                 }
@@ -212,6 +239,13 @@ public class LoginFragment extends DialogFragment {
             }
         };
         queue.add(request);
+    }
+
+    private void updateCurrentUser(String uid){
+        SharedPreferences sharedPreferences=getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        editor.putString("UID",uid);
+        editor.apply();
     }
 
 }

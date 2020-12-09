@@ -31,6 +31,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -78,11 +79,11 @@ public class RegisterFragment extends DialogFragment {
         }
     }
 
-    ImageView btnClose;
+    ImageView btnClose, btnSelectLocation;
     BlurView blurView;
     Button btn_confirm,btn_farmer,btn_buyer;
     LinearLayout layout1, layout2;
-    EditText email, password,location,contact;
+    EditText email, password,location,contact,name;
     AlertDialog.Builder builder;
     int UserType;
 
@@ -137,10 +138,12 @@ public class RegisterFragment extends DialogFragment {
         btn_buyer=view.findViewById(R.id.buyer);
         btn_farmer=view.findViewById(R.id.farmer);
         btn_confirm=view.findViewById(R.id.btn_confirm);
+        btnSelectLocation=view.findViewById(R.id.map);
         contact=view.findViewById(R.id.contact);
         location=view.findViewById(R.id.address);
         layout1=view.findViewById(R.id.first);
         layout2=view.findViewById(R.id.second);
+        name=view.findViewById(R.id.name);
         email = view.findViewById(R.id.email);
         password = view.findViewById(R.id.password);
 
@@ -173,11 +176,11 @@ public class RegisterFragment extends DialogFragment {
         btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(UserType==1)
-                    startActivity(new Intent(getActivity(),BuyerActivity.class));
-                else
-                    startActivity(new Intent(getActivity(),FarmerActivity.class));
-                getActivity().finish();
+                if(name.getText().toString().isEmpty() || email.getText().toString().isEmpty() || password.getText().toString().isEmpty() || contact.getText().toString().isEmpty() || location.getText().toString().isEmpty())
+                    Toast.makeText(getActivity(),"Please fill all the Fields",Toast.LENGTH_SHORT).show();
+                else {
+                    sendRegisterRequest(UserType);
+                }
             }
         });
 
@@ -188,26 +191,32 @@ public class RegisterFragment extends DialogFragment {
 
     }
 
-    public void sendLoginRequest(){
+    public void sendRegisterRequest(int type){
 
         final ProgressDialog pDialog = new ProgressDialog(getContext());
         pDialog.setMessage("Registration ...");
         pDialog.show();
 
         RequestQueue queue = Volley.newRequestQueue(getContext());
-        StringRequest request = new StringRequest(Request.Method.POST, "https://farmerbuyer.herokuapp.com/register", new Response.Listener<String>() {
+
+        String url;
+
+        if(type==1)
+            url="https://farmerbuyer.herokuapp.com/registerBuyer";
+        else
+            url="https://farmerbuyer.herokuapp.com/registerFarmer";
+
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
                 Log.i("My success",""+response);
                 pDialog.dismiss();
-                if(response.equalsIgnoreCase("true")) {
-
-                    Toast.makeText(getContext(), "Login Successful", Toast.LENGTH_SHORT).show();
-                }else
-                {
-                    //credential not match
-                    Toast.makeText(getContext(),"Login Failed",Toast.LENGTH_LONG).show();
+                if(response.contains("auth/email-already-in-use"))
+                    Toast.makeText(getActivity(),"User with Email-ID Already Exists",Toast.LENGTH_SHORT).show();
+                else {
+                    Toast.makeText(getActivity(),"User Registration Successful",Toast.LENGTH_SHORT).show();
+                    RegisterFragment.this.dismiss();
                 }
             }
 
@@ -224,8 +233,13 @@ public class RegisterFragment extends DialogFragment {
 
                 final HashMap<String, String> postParams = new HashMap<String, String>();
                 postParams.put("email", email.getText().toString());
-                postParams.put("contact",contact.getText().toString());
+                postParams.put("phone",contact.getText().toString());
                 postParams.put("password", password.getText().toString());
+                postParams.put("name",name.getText().toString());
+                postParams.put("image","image");
+                postParams.put("address",location.getText().toString());
+                postParams.put("latitude","0");
+                postParams.put("longitude","0");
                 return postParams;
             }
         };
