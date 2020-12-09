@@ -205,13 +205,13 @@ public class LoginFragment extends DialogFragment {
 
                 if(type.equalsIgnoreCase("0")) {
                     Toast.makeText(getContext(), "Buyer Login Successful", Toast.LENGTH_SHORT).show();
-                    updateCurrentUser(uid);
+                    updateCurrentUser(uid,"buyer");
                     startActivity(new Intent(getActivity(),BuyerActivity.class));
                     getActivity().finish();
                 }
                 else if (type.equalsIgnoreCase("1")){
                     Toast.makeText(getContext(),"Farmer Login Successful",Toast.LENGTH_SHORT).show();
-                    updateCurrentUser(uid);
+                    updateCurrentUser(uid,"farmer");
                     startActivity(new Intent(getActivity(),FarmerActivity.class));
                     getActivity().finish();
                 }
@@ -241,11 +241,15 @@ public class LoginFragment extends DialogFragment {
         queue.add(request);
     }
 
-    private void updateCurrentUser(String uid){
+    private void updateCurrentUser(String uid,String type){
         SharedPreferences sharedPreferences=getActivity().getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=sharedPreferences.edit();
+        editor.putBoolean("logged",true);
         editor.putString("UID",uid);
+        editor.putString("type",type);
         editor.apply();
+
+        Log.d("updated",sharedPreferences.getString("uid","12"));
     }
 
 }

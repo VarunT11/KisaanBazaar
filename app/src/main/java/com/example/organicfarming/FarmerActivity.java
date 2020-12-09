@@ -1,19 +1,26 @@
 package com.example.organicfarming;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.navigation.NavigationView;
 
-public class FarmerActivity extends AppCompatActivity {
+public class FarmerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     NavController navController;
     NavigationView navigationView;
@@ -42,7 +49,43 @@ public class FarmerActivity extends AppCompatActivity {
         navController= Navigation.findNavController(this,R.id.farmer_host_fragment);
         NavigationUI.setupActionBarWithNavController(this,navController,appBarConfiguration);
         NavigationUI.setupWithNavController(navigationView,navController);
+        navigationView.setNavigationItemSelectedListener(this);
 
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        // Handle navigation view item clicks here.
+        switch (item.getItemId()) {
+
+            case R.id.nav_farmer_home: {
+                navController.navigate(R.id.farmer_nav_home);
+                break;
+            }
+
+            case R.id.nav_farmer_profile: {
+                navController.navigate(R.id.farmer_nav_profile);
+                break;
+            }
+
+            case R.id.nav_farmer_my_orders: {
+                navController.navigate(R.id.farmer_nav_orders);
+                break;
+            }
+
+            case R.id.nav_farmer_log_out:{
+                SharedPreferences sharedPreferences=getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor=sharedPreferences.edit();
+                editor.putBoolean("logged",false);
+                editor.apply();
+                startActivity(new Intent(this,RegisterActivity.class));
+                break;
+            }
+
+        }
+        //close navigation drawer
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     @Override
