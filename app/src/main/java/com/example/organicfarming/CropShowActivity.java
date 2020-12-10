@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -36,7 +37,7 @@ public class CropShowActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     TextView textView;
     LinearLayout layout;
-    String crop;
+    String crop="crop";
     FarmerAdapter farmerAdapter;
     ArrayList<FarmerItem> farmerItems=new ArrayList<>();
 
@@ -44,14 +45,28 @@ public class CropShowActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crop_show);
-        layout.findViewById(R.id.layout);
-        textView.findViewById(R.id.name);
+        layout=findViewById(R.id.layout);
+        textView=findViewById(R.id.name);
 
 
 
         Intent intent = getIntent();
-        if(intent.getExtras()!=null){
-            crop=intent.getExtras().getString("crop","");
+        if(intent.getExtras()!=null) {
+            crop = intent.getExtras().getString("crop", "");
+
+            final ImageView img = new ImageView(this);
+            Picasso.get().load(intent.getExtras().getString("url", "")).into(img, new com.squareup.picasso.Callback() {
+                @Override
+                public void onSuccess() {
+                    layout.setBackgroundDrawable(img.getDrawable());
+                }
+
+                @Override
+                public void onError(Exception e) {
+
+                }
+
+            });
         }
 
         textView.setText(crop);

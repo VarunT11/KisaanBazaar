@@ -52,6 +52,7 @@ public class CropListAdapter extends RecyclerView.Adapter<CropListAdapter.ViewHo
             public void onClick(View view) {
                 Intent intent = new Intent(context,CropShowActivity.class);
                 intent.putExtra("crop",cropShowItem.getCropName());
+                intent.putExtra("url",cropShowItem.getCropUrl());
                 context.startActivity(intent);
             }
         });
