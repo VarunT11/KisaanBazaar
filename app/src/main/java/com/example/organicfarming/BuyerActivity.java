@@ -84,11 +84,14 @@ public class BuyerActivity extends AppCompatActivity implements NavigationView.O
             }
 
             case R.id.nav_buyer_log_out:{
-                SharedPreferences sharedPreferences=getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences sharedPreferences=getSharedPreferences("UserData",Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor=sharedPreferences.edit();
                 editor.putBoolean("logged",false);
+                editor.putString("UID","NO");
+                editor.putString("type","NO");
                 editor.apply();
                 startActivity(new Intent(this,RegisterActivity.class));
+                BuyerActivity.this.finish();
                 break;
             }
 

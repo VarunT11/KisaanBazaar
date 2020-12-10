@@ -23,13 +23,14 @@ public class SplashScreenActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                SharedPreferences sharedPreferences=getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences sharedPreferences=getSharedPreferences("UserData",Context.MODE_PRIVATE);
                 Log.d("logged",String.valueOf(sharedPreferences.getBoolean("logged",false)));
-                if(sharedPreferences.getBoolean("logged",false) && sharedPreferences.getString("type","").equals("farmer")){
+                Log.d("USER",sharedPreferences.getString("UID","AA")+"----"+sharedPreferences.getString("type","00"));
+                if(sharedPreferences.getBoolean("logged",true) && sharedPreferences.getString("type","").equals("farmer")){
                     startActivity(new Intent(SplashScreenActivity.this,FarmerActivity.class));
                     SplashScreenActivity.this.finish();
                 }
-                else if(sharedPreferences.getBoolean("logged",false) && sharedPreferences.getString("type","").equals("buyer")){
+                else if(sharedPreferences.getBoolean("logged",true) && sharedPreferences.getString("type","").equals("buyer")){
                     startActivity(new Intent(SplashScreenActivity.this,BuyerActivity.class));
                     SplashScreenActivity.this.finish();
                 }

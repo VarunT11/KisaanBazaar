@@ -224,7 +224,7 @@ public class LoginFragment extends DialogFragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                pDialog.dismiss();
                 Toast.makeText(getContext(), "my error :"+error, Toast.LENGTH_LONG).show();
                 Log.i("My error",""+error);
             }
@@ -242,12 +242,14 @@ public class LoginFragment extends DialogFragment {
     }
 
     private void updateCurrentUser(String uid,String type){
-        SharedPreferences sharedPreferences=getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences=getActivity().getSharedPreferences("UserData",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=sharedPreferences.edit();
         editor.putBoolean("logged",true);
         editor.putString("UID",uid);
         editor.putString("type",type);
         editor.apply();
+
+        Log.d("USER",uid+" "+type);
 
         Log.d("updated",sharedPreferences.getString("uid","12"));
     }

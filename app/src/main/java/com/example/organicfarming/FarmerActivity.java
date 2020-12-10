@@ -74,11 +74,14 @@ public class FarmerActivity extends AppCompatActivity implements NavigationView.
             }
 
             case R.id.nav_farmer_log_out:{
-                SharedPreferences sharedPreferences=getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences sharedPreferences=getSharedPreferences("UserData",Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor=sharedPreferences.edit();
                 editor.putBoolean("logged",false);
+                editor.putString("UID","NO");
+                editor.putString("type","NO");
                 editor.apply();
                 startActivity(new Intent(this,RegisterActivity.class));
+                FarmerActivity.this.finish();
                 break;
             }
 

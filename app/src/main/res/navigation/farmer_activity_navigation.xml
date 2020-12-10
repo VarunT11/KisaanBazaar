@@ -23,4 +23,10 @@
         android:label="Order Fragment"
         tools:layout="@layout/fragment_farmer_order"/>
 
+    <fragment
+        android:id="@+id/farmer_nav_add_crop"
+        android:name="com.example.organicfarming.AddCropFragment"
+        android:label="Add Crop Fragment"
+        tools:layout="@layout/fragment_add_crop"/>
+
 </navigation>

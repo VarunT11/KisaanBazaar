@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="vegetables">
+        <item>Onion</item>
+        <item>Potato</item>
+        <item>Rice</item>
+    </array>
+</resources>
