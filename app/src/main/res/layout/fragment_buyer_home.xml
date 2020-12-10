@@ -9,7 +9,8 @@
     android:paddingHorizontal="12dp"
     android:paddingVertical="16dp"
     >
-    <View
+    <ImageView
+        android:src="@drawable/map"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         />

@@ -40,6 +40,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-runtime:2.2.2'
     implementation 'androidx.navigation:navigation-fragment:2.2.2'
     implementation 'androidx.navigation:navigation-ui:2.2.2'
+    implementation 'com.squareup.picasso:picasso:2.71828'
 //    implementation 'com.google.maps.android:android-maps-utils:2.2.0'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
