@@ -13,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 public class CropListAdapter extends RecyclerView.Adapter<CropListAdapter.ViewHolder>{
@@ -43,11 +45,14 @@ public class CropListAdapter extends RecyclerView.Adapter<CropListAdapter.ViewHo
         holder.cropName.setText(cropShowItem.getCropName());
         holder.cropDistance.setText(cropShowItem.cropDistance+ " KM");
         holder.cropAvailableSellers.setText("Available Sellers : " + cropShowItem.getCropSellers());
+        Picasso.get().load(cropShowItem.getCropUrl()).error(R.drawable.onion).into(holder.cropImage);
 
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                context.startActivity(new Intent(context,CropShowActivity.class));
+                Intent intent = new Intent(context,CropShowActivity.class);
+                intent.putExtra("crop",cropShowItem.getCropName());
+                context.startActivity(intent);
             }
         });
 
