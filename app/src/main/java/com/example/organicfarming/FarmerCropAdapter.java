@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 public class FarmerCropAdapter extends RecyclerView.Adapter<FarmerCropAdapter.ViewHolder> {
@@ -37,6 +39,7 @@ public class FarmerCropAdapter extends RecyclerView.Adapter<FarmerCropAdapter.Vi
     public void onBindViewHolder(@NonNull FarmerCropAdapter.ViewHolder holder, int position) {
         holder.tvCropItemName.setText(arrayList.get(position).getName());
         holder.tvCropItemViews.setText(Integer.toString(arrayList.get(position).getViews()));
+        Picasso.get().load(arrayList.get(position).getImage()).into(holder.imgCropItem);
     }
 
     @Override
@@ -47,11 +50,13 @@ public class FarmerCropAdapter extends RecyclerView.Adapter<FarmerCropAdapter.Vi
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView tvCropItemName, tvCropItemViews;
+        ImageView imgCropItem;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvCropItemName=itemView.findViewById(R.id.tvCropItemName);
             tvCropItemViews=itemView.findViewById(R.id.tvCropItemViews);
+            imgCropItem=itemView.findViewById(R.id.imgCropItem);
         }
     }
 }

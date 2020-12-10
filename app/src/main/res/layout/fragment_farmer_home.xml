@@ -77,14 +77,17 @@
     <ImageView
         android:id="@+id/imageView9"
         android:layout_width="0dp"
-        android:layout_height="400dp"
+        android:layout_height="500dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
         android:src="@drawable/rectangle_white"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView7" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView7"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/btnChangeLocation"
@@ -130,15 +133,13 @@
         android:id="@+id/btnAddCrop"
         android:layout_width="55dp"
         android:layout_height="55dp"
-        android:layout_marginTop="24dp"
         android:layout_marginBottom="24dp"
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/ic_add_crop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/imageView9"
-        app:layout_constraintStart_toStartOf="@+id/imageView9"
-        app:layout_constraintTop_toBottomOf="@+id/imageView9" />
+        app:layout_constraintStart_toStartOf="@+id/imageView9" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcvFarmerHome"

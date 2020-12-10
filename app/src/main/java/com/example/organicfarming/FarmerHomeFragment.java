@@ -27,6 +27,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -124,11 +128,12 @@ public class FarmerHomeFragment extends Fragment {
         progressDialog.setCanceledOnTouchOutside(false);
 
         RequestQueue queue= Volley.newRequestQueue(getActivity());
-        StringRequest request=new StringRequest(Request.Method.GET, "https://farmerbuyer.herokuapp.com/getCrops", new Response.Listener<String>() {
+        StringRequest request=new StringRequest(Request.Method.POST, "https://farmerbuyer.herokuapp.com/getCrops", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 progressDialog.dismiss();
                 Log.d("Farmer",response);
+                updateArrayList(response);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -140,13 +145,25 @@ public class FarmerHomeFragment extends Fragment {
         }){
             @Override
             protected Map<String, String> getParams() {
-
                 final HashMap<String, String> postParams = new HashMap<String, String>();
                 postParams.put("uid",uid);
                 return postParams;
             }
         };
         queue.add(request);
+    }
 
+    private void updateArrayList(String response){
+        JSONArray array;
+        try {
+            array=new JSONArray(response);
+            for(int i=0;i<array.length();i++){
+                JSONObject object=array.getJSONObject(i);
+                arrayList.add(new FarmerCrop(object.getString("name"),object.getString("image"),object.getInt("views")));
+            }
+            cropAdapter.notifyDataSetChanged();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }
