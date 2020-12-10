@@ -1,0 +1,136 @@
+API list with url and datatypes:
+
+Heroku url- https://farmerbuyer.herokuapp.com
+
+Login:  /login
+Request type- POST
+email - string
+password - string
+	
+Return:
+{“type”:1”,”uid”:”xyx”} farmer, 
+{“type”:0”,”uid”:”xyx”} for buyer 
+and “-1” for not found or error
+
+Logout -/logout
+Request type- POST
+
+Register Farmer: /registerFarmer
+Request type- POST
+name - String
+image - string
+phone - number
+address - String
+latitude - float
+longitude - float
+rating - float (auto 0)
+numberOfRating - number (auto 0)
+email - string
+password - string
+
+Crop: /addCrop
+Request type- POST
+name - String
+image- string
+createdDate - timestamp (automatic)
+farmeruid -string
+pricePerTon - number
+timeleft -number (number of days)
+views -number (automatic=0)
+latitude - float
+longitude - float
+weight - number
+
+Register Buyer:  /registerBuyer
+Request type- POST
+name - String
+image - string
+phone - number
+address - String
+latitude - float
+longitude - float
+email - string
+password - string
+
+Order: /addOrder
+Request type- POST
+Cropid- string
+orderDate- timestamp (automatic)
+weight- number
+farmeruid- string 
+buyeruid- string
+
+Get Crops of one farmer : /getCrops will return list of crop object
+Request type- POST
+uid -string
+
+Get buyer info : /getBuyer
+Request type- GET
+uid -string
+
+Get farmer info : /getFarmer
+Request type- GET
+uid -string
+
+Get Crops by name : /searchCrops will return list of crop object
+Request type- GET
+name-string
+
+Get Crops by name : /getfarmerbycrop will return list of farmer object
+Request type- GET
+name-string
+
+Update Crops Info: /updateCrops 
+Request type- PUT
+pricePerTon: number
+weight: number
+timeleft: number
+Id: string
+
+Add rating:  /addRating
+Request type- PUT
+uid - string
+rating - number
+
+Cancel order done:  /cancelOrder
+Request type- PUT
+id - string(order id)
+ 
+Buyer order done: /getBuyerOrder
+Request type- GET
+uid - string
+
+Farmer order  done: /getFarmerOrder
+Request type- GET
+uid - string
+
+Profile update done: /updateProfile
+Request type- PUT
+address -string
+image -string
+phone -number
+uid -string
+longitude -number
+latitude -number
+
+Long lat radius: /getCropByLocation
+Request type- GET
+distance -number(miles)
+latitude -number
+longitude -number
+
+Favourites: /favourites
+Request type- POST
+farmeruid -string
+buyeruid -string
+
+Get Favourites of Buyer: /getfavourites
+Request type- GET
+1.uid-string(uid of buyer)
+
+Get All Crops: /getAllCrops
+Request type- GET
+
+Delete Favourites :/deleteFav
+Request type- DELETE
+1.id-string(id of Favourites)
